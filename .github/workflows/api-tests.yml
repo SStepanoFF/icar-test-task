@@ -1,0 +1,35 @@
+name: API tests
+
+on:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      env:
+        description: Target environment (dev / qa / staging)
+        default: qa
+
+jobs:
+  api-tests:
+    runs-on: ubuntu-latest
+    env:
+      PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"   # API tests do not need browsers
+      ICAR_API_TOKEN: ${{ secrets.ICAR_API_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+      - name: Run smoke on PR, full suite on manual run
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            mvn -B test -Denv=qa -Dgroups=smoke
+          else
+            mvn -B test -Denv=${{ github.event.inputs.env }}
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: surefire-reports
+          path: target/surefire-reports
