@@ -1,4 +1,4 @@
-package com.icar.core.config;
+package com.icar.config;
 
 import java.io.IOException;
 import java.io.InputStream;

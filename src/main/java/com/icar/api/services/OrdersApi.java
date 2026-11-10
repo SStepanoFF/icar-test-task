@@ -2,8 +2,8 @@ package com.icar.api.services;
 
 import com.icar.api.dto.OrderRequest;
 import com.icar.api.dto.OrderUpdateRequest;
-import com.icar.core.api.ApiResponse;
-import com.icar.core.api.BaseApi;
+import com.icar.api.ApiResponse;
+import com.icar.api.BaseApi;
 import com.microsoft.playwright.APIRequestContext;
 
 /** Vehicle Ordering API: one method per endpoint, no assertions here. */

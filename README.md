@@ -14,15 +14,15 @@ mvn test -Dbase.url=http://localhost:8080/api  # override any property (e.g. a m
 ## Structure
 | Layer | Class | Responsibility |
 |---|---|---|
-| core/config | `EnvConfig` | per-environment config, secrets from env vars |
-| core/api | `BaseApi`, `ApiResponse` | universal HTTP methods, JSON (de)serialization; no business knowledge |
+| config | `EnvConfig` | per-environment config, secrets from env vars |
+| api | `BaseApi`, `ApiResponse` | base class: generic HTTP methods and JSON (de)serialization, no business knowledge |
 | api/services | `OrdersApi extends BaseApi` | one method per endpoint, no assertions |
 | api/dto | `OrderRequest`, `OrderResponse`, ... | request/response models |
 | api/data | `OrderDataFactory` | valid default payloads; tests override only what matters |
 | test/base | `BaseApiTest` | context lifecycle, preconditions via API, automatic cleanup |
 | test/api | `OrdersApiTest` | tests and assertions only |
 
-New endpoint group = new DTOs + one subclass of `BaseApi` (e.g. `InvoicesApi`); core is untouched.
+New endpoint group = new DTOs + one subclass of `BaseApi` (e.g. `InvoicesApi`); `BaseApi` is untouched.
 
 ## Assumptions (to confirm with REST docs / OpenAPI)
 - Host is fictional (`*.icar.example.com`); tests need a real or mocked server to pass.

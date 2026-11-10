@@ -7,7 +7,7 @@ import com.icar.api.dto.OrderResponse;
 import com.icar.api.dto.OrderStatus;
 import com.icar.api.dto.OrderUpdateRequest;
 import com.icar.base.BaseApiTest;
-import com.icar.core.api.ApiResponse;
+import com.icar.api.ApiResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;

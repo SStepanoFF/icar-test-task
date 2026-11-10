@@ -1,4 +1,4 @@
-package com.icar.core.api;
+package com.icar.api;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
