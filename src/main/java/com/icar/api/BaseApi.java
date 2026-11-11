@@ -3,9 +3,11 @@ package com.icar.api;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.icar.api.dto.ApiResponse;
 import com.microsoft.playwright.APIRequestContext;
 import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.options.RequestOptions;
+import io.qameta.allure.Allure;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -45,12 +47,15 @@ public abstract class BaseApi {
     }
 
     private RequestOptions jsonBody(Object body) {
-        return RequestOptions.create().setData(toJson(body));
+        String json = toJson(body);
+        Allure.addAttachment("Request body", "application/json", json);
+        return RequestOptions.create().setData(json);
     }
 
     private ApiResponse wrap(APIResponse response) {
         ApiResponse result = new ApiResponse(response.status(), response.text());
         log.info("<- {} {}", result.getStatus(), result.getRawBody());
+        Allure.addAttachment("Response " + result.getStatus(), "application/json", result.getRawBody());
         return result;
     }
 

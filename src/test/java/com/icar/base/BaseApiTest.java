@@ -1,21 +1,15 @@
 package com.icar.base;
 
-import com.icar.api.dto.OrderRequest;
-import com.icar.api.dto.OrderResponse;
-import com.icar.api.services.OrdersApi;
-import com.icar.api.ApiResponse;
+import com.icar.api.services.OrdersService;
+import com.icar.config.AllureEnvironmentWriter;
 import com.icar.config.EnvConfig;
 import com.microsoft.playwright.APIRequest;
 import com.microsoft.playwright.APIRequestContext;
 import com.microsoft.playwright.Playwright;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,13 +18,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 public abstract class BaseApiTest {
 
     private static Playwright playwright;
-    private static APIRequestContext requestContext;
+    protected static APIRequestContext requestContext;
 
-    protected OrdersApi ordersApi;
-    private final List<String> createdOrderIds = new ArrayList<>();
+    protected OrdersService ordersService;
 
     @BeforeAll
     static void initContext() {
+        AllureEnvironmentWriter.write();
         playwright = Playwright.create();
 
         Map<String, String> headers = new HashMap<>();
@@ -56,27 +50,6 @@ public abstract class BaseApiTest {
         }
     }
 
-    @BeforeEach
-    void initApis() {
-        ordersApi = new OrdersApi(requestContext);
-    }
 
-    @AfterEach
-    void cleanUp() {
-        createdOrderIds.forEach(ordersApi::deleteOrder);
-        createdOrderIds.clear();
-    }
 
-    protected void registerForCleanup(String orderId) {
-        createdOrderIds.add(orderId);
-    }
-
-    /** Precondition helper: creates an order via API, registers it for cleanup, returns it. */
-    protected OrderResponse givenOrderExists(OrderRequest request) {
-        ApiResponse response = ordersApi.createOrder(request);
-        assertThat(response.getStatus()).as("precondition: order created").isEqualTo(201);
-        OrderResponse order = response.as(OrderResponse.class);
-        registerForCleanup(order.getId());
-        return order;
-    }
 }

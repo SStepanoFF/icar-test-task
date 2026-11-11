@@ -1,6 +1,6 @@
 # iCar API TAF (Vehicle Ordering)
 
-Playwright (Java) `APIRequestContext` + JUnit 5 + AssertJ + Lombok.
+Playwright (Java) `APIRequestContext` + JUnit 5 + AssertJ + Lombok + Allure reporting.
 
 ## Run
 ```bash
@@ -10,6 +10,16 @@ mvn test -Denv=qa                              # env: dev (default) | qa | stagi
 mvn test -Denv=qa -Dgroups=smoke               # smoke only
 mvn test -Dbase.url=http://localhost:8080/api  # override any property (e.g. a mock)
 ```
+
+## Reporting (Allure)
+Every run writes results to `target/allure-results`. Each HTTP call attaches its request and response body, and service methods are shown as steps.
+```bash
+mvn test -Denv=qa
+mvn allure:serve        # build and open the report locally
+mvn allure:report       # static report in target/site/allure-maven-plugin
+```
+The report's *Environment* widget shows the env the run used (`-Denv=...`, base URL, timeout, Java version); no secrets are written.
+The CI workflow uploads both the report and the raw results as artifacts. Tests are grouped with `@Epic` / `@Feature`, smoke tests carry `@Severity(CRITICAL)`.
 
 ## Structure
 | Layer | Class | Responsibility |
