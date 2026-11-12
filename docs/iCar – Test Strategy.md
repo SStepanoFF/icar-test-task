@@ -56,7 +56,7 @@ Targets are proposals and must be adjusted once the baseline from the first two 
 | Metric | Target |
 | --- | --- |
 | Manual regression duration | 5 days to about 2 days at month 3, then 1-2 days |
-| Escaped defects in ordering, invoicing and integrations | About 50% fewer within two quarters |
+| Escaped defects in ordering, invoicing and integrations | About 30% fewer by month 3 and 50-60% fewer by month 6. Critical and high severity: about 70% fewer within two quarters |
 | API coverage of critical endpoints (happy and negative paths) | 80% or more |
 | Flaky UI test rate | Under 3% reruns |
 | CI feedback time | Smoke under 5 min, full API suite under 15 min |
@@ -74,6 +74,6 @@ The delivered framework covers the Vehicle Ordering API only, as the assignment 
 
 ## Assumptions and risks of this plan
 
-- API contracts and DTO fields in the Part 3 code are illustrative until confirmed with the real REST documentation.
+- API contracts and DTO fields in the Сode Part are illustrative until confirmed with the real REST documentation.
 - Targets depend on baseline data and on developers sharing test ownership.
 - The UI tooling decision depends on the outcome of the PowerBuilder spike.
